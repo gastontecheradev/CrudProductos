@@ -13,5 +13,31 @@ namespace CrudProductos.Controllers
         {
             _context = context;
         }
+
+        // GET: /Productos
+        public async Task<IActionResult> Index()
+        {
+            var productos = await _context.Productos.ToListAsync();
+            return View(productos);
+        }
+
+        // GET: /Productos/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var producto = await _context.Productos
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (producto == null)
+            {
+                return NotFound();
+            }
+
+            return View(producto);
+        }
     }
 }
